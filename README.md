@@ -1,1 +1,1 @@
-# -containerized-cloudrun-template
+# containerized-cloudrun-template
