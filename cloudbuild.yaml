@@ -1,0 +1,18 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}', '.']
+
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}']
+
+- name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  args:
+    - run
+    - deploy
+    - hello-world
+    - --image
+    - '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}'
+    - --region
+    - europe-west3
+    - --allow-unauthenticated
+  entrypoint: gcloud
